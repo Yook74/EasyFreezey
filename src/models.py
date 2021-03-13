@@ -102,7 +102,7 @@ class RecipientsSessionRecipe(db.Model):
     I'm not sure that I want to let user sign up for partial meals,
     but this schema will allow that since meal_count is a Float.
     """
-    participant_id = db.Column(db.Integer(), db.ForeignKey('recipient.id'), primary_key=True)
+    recipient_id = db.Column(db.Integer(), db.ForeignKey('recipient.id'), primary_key=True)
     session_id = db.Column(db.Integer(), db.ForeignKey('session.id'), primary_key=True)
     recipe_id = db.Column(db.Integer(), db.ForeignKey('recipe.id'), primary_key=True)
     meal_count = db.Column(db.Float(), nullable=False)
