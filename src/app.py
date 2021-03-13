@@ -6,9 +6,16 @@ from src.models import db
 
 
 class AppConfig:
-    use_sqlite = True
+    use_sqlite = False
+    db_username = 'freezey-flask'
+    db_host = 'soup.tplinkdns.com'
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    @property
+    def db_password(self):
+        with open('db_password.txt') as password_file:
+            return password_file.read().strip()
 
     @property
     def SQLALCHEMY_DATABASE_URI(self):
@@ -16,7 +23,7 @@ class AppConfig:
             db_path = path.abspath('easy-freezey.db')
             return 'sqlite:///' + db_path
         else:
-            raise NotImplemented()
+            return f'postgresql://{self.db_username}:{self.db_password}@{self.db_host}:5432/easy_freezey'
 
 
 def create_app():
