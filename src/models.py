@@ -50,8 +50,6 @@ class Recipe(db.Model):
     source = db.Column(db.String(256), nullable=True)
     servings = db.Column(db.Float(), nullable=False)
 
-    tags = db.relationship('Tag', backref='recipes')
-
 
 class RecipeIngredient(db.Model):
     """
@@ -95,7 +93,7 @@ class Recipient(db.Model):
     email = db.Column(db.String(128), nullable=True)
 
 
-class RecipientsSessionRecipe(db.Model):
+class RecipientSessionRecipe(db.Model):
     """
     This describes which recipes are made in a session, how many, and who they go to.
     meal_count describes how many instances of a recipe a recipient is signed up for,
