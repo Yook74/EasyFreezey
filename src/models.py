@@ -16,6 +16,7 @@ class Ingredient(db.Model):
     store_unit price is the cost of one store_unit wherever the shopping will be done; usually Costco.
     """
     id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(), nullable=False)
     aisle_id = db.Column(db.Integer(), db.ForeignKey('aisle.id'))
     recipe_unit = db.Column(db.String(32), nullable=False)
     store_unit = db.Column(db.String(32), nullable=False)
