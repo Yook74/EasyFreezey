@@ -32,7 +32,7 @@ class Aisle(db.Model):
     For example, Canned Goods
     """
     id = db.Column(db.Integer(), primary_key=True)
-    name = db.Column(db.String(32), nullable=False)
+    name = db.Column(db.String(32), nullable=False, unique=True)
 
 
 class Recipe(db.Model):
@@ -50,6 +50,13 @@ class Recipe(db.Model):
     source = db.Column(db.String(256), nullable=True)
     servings = db.Column(db.Float(), nullable=False)
 
+    @property
+    def cost(self) -> float:
+        """The total cost of all the ingredients in this recipe"""
+        return sum([
+            recipe_ingredient.cost for recipe_ingredient in RecipeIngredient.query.filter_by(recipe_id=self.id)
+        ])
+
 
 class RecipeIngredient(db.Model):
     """
@@ -59,6 +66,14 @@ class RecipeIngredient(db.Model):
     recipe_id = db.Column(db.Integer(), db.ForeignKey('recipe.id'), primary_key=True)
     ingredient_id = db.Column(db.Integer(), db.ForeignKey('ingredient.id'), primary_key=True)
     amount = db.Column(db.Float(), nullable=False)
+
+    ingredient = db.relationship('Ingredient')
+    recipe = db.relationship('Recipe')
+
+    @property
+    def cost(self) -> float:
+        """:return: The cost of this ingredient in this recipe"""
+        return (self.ingredient.store_unit_price / self.ingredient.unit_conversion) * self.amount
 
 
 class Tag(db.Model):
@@ -79,7 +94,7 @@ class RecipeTag(db.Model):
 class Session(db.Model):
     """A session is an event when meal prep is performed."""
     id = db.Column(db.Integer(), primary_key=True)
-    date = db.Column(db.Date(), nullable=False)
+    date = db.Column(db.Date(), nullable=False, unique=True)
 
 
 class Recipient(db.Model):
@@ -105,3 +120,12 @@ class RecipientSessionRecipe(db.Model):
     session_id = db.Column(db.Integer(), db.ForeignKey('session.id'), primary_key=True)
     recipe_id = db.Column(db.Integer(), db.ForeignKey('recipe.id'), primary_key=True)
     meal_count = db.Column(db.Float(), nullable=False)
+
+    recipient = db.relationship('Recipient')
+    session = db.relationship('Session')
+    recipe = db.relationship('Recipe')
+
+    @property
+    def cost(self) -> float:
+        """The cost of this number of meals"""
+        return self.recipe.cost * self.meal_count
