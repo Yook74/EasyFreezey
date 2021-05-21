@@ -3,6 +3,7 @@ from os import path
 from flask import Flask
 
 from src.models import db
+from src.routes import blueprints
 
 
 class AppConfig:
@@ -32,11 +33,11 @@ def create_app():
     db.init_app(app)
 
     with app.app_context():
-        import routes
-        return app
+        for blueprint in blueprints:
+            app.register_blueprint(blueprint)
 
+    return app
 
-application = create_app()  # Gunicorn uses this application object
 
 if __name__ == '__main__':
-    application.run()
+    create_app().run()
