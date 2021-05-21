@@ -11,7 +11,7 @@ def validate_session_id(session_id: int):
         raise NotFound(f'No session was found with ID {session_id}.')
 
 
-@app.route('/<int:session_id>/shopping')
+@app.route('/<int:session_id>/shopping', methods=['GET'])
 def shopping_list(session_id):
     """
     :param session_id: The ID of the desired session. TODO potentially read this from a cookie or other storage
@@ -34,7 +34,7 @@ def shopping_list(session_id):
     ])
 
 
-@app.route('/<int:session_id>/recipe')
+@app.route('/<int:session_id>/recipe', methods=['GET'])
 def session_recipes(session_id):
     """
     :param session_id: The ID of the desired session. TODO potentially read this from a cookie or other storage
@@ -48,16 +48,14 @@ def session_recipes(session_id):
 
     return jsonify([
         {
+            'id': recipe.id,
             'name': recipe.name,
-            'text': recipe.text,
-            'source': recipe.source,
-            'servingsPerMeal': recipe.servings,
             'totalMeals': total_meals
         } for recipe, total_meals in recipes
     ])
 
 
-@app.route('/<int:session_id>/recipient')
+@app.route('/<int:session_id>/recipient', methods=['GET'])
 def session_recipients(session_id):
     """
     :param session_id: The ID of the desired session. TODO potentially read this from a cookie or other storage
