@@ -6,7 +6,7 @@ from src.models import Recipe, db, Ingredient, RecipeIngredient
 blueprint = Blueprint('recipe', __name__, url_prefix='/recipe')
 
 
-@blueprint.route('', methods=['POST'])
+@blueprint.post('')
 def post_recipe():
     """
     Expects JSON describing a recipe in the following format:
@@ -52,7 +52,7 @@ def post_recipe():
     return str(new_recipe.id)
 
 
-@blueprint.route('', methods=['GET'])
+@blueprint.get('')
 def all_recipes():
     return jsonify([
         {'name': recipe.name, 'id': recipe.id, 'cost': recipe.cost}
@@ -60,7 +60,7 @@ def all_recipes():
     ])
 
 
-@blueprint.route('<int:recipe_id>', methods=['GET'])
+@blueprint.get('<int:recipe_id>')
 def get_recipe(recipe_id):
     recipe = Recipe.query.filter_by(id=recipe_id).first()
 

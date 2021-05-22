@@ -6,7 +6,7 @@ from src.models import Ingredient, db
 blueprint = Blueprint('ingredient', __name__, url_prefix='/ingredient')
 
 
-@blueprint.route('', methods=['POST'])
+@blueprint.post('')
 def post_ingredient():
     """
     Expects JSON describing an ingredient. The JSON object should have the following keys:
@@ -30,7 +30,7 @@ def post_ingredient():
     return str(ingredient.id)
 
 
-@blueprint.route('', methods=['GET'])
+@blueprint.get('')
 def all_ingredients():
     return jsonify([
         {'name': ingredient.name, 'id': ingredient.id}
@@ -38,7 +38,7 @@ def all_ingredients():
     ])
 
 
-@blueprint.route('<int:ingredient_id>', methods=['GET'])
+@blueprint.get('<int:ingredient_id>')
 def get_ingredient(ingredient_id: int):
     ingredient = Ingredient.query.filter_by(id=ingredient_id).first()
 

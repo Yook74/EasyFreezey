@@ -11,7 +11,7 @@ from src.routes.helpers import validate_session_id
 blueprint = Blueprint('session', __name__)
 
 
-@blueprint.route('/<int:session_id>/shopping', methods=['GET'])
+@blueprint.get('/<int:session_id>/shopping')
 def shopping_list(session_id):
     """
     :param session_id: The ID of the desired session. TODO potentially read this from a cookie or other storage
@@ -34,7 +34,7 @@ def shopping_list(session_id):
     ])
 
 
-@blueprint.route('/<int:session_id>/recipe', methods=['GET'])
+@blueprint.get('/<int:session_id>/recipe')
 def session_recipes(session_id):
     """
     :param session_id: The ID of the desired session. TODO potentially read this from a cookie or other storage
@@ -55,7 +55,7 @@ def session_recipes(session_id):
     ])
 
 
-@blueprint.route('/<int:session_id>/recipient', methods=['GET'])
+@blueprint.get('/<int:session_id>/recipient')
 def session_recipients(session_id):
     """
     :param session_id: The ID of the desired session. TODO potentially read this from a cookie or other storage
@@ -81,7 +81,7 @@ def session_recipients(session_id):
     return jsonify(out)
 
 
-@blueprint.route('/session', methods=['POST'])
+@blueprint.post('/session')
 def post_session():
     """
     Expects JSON data containing just one key: "date".
@@ -101,7 +101,7 @@ def post_session():
         return str(session.id)
 
 
-@blueprint.route('/session', methods=['GET'])
+@blueprint.get('/session')
 def all_sessions():
     return jsonify([
         {'id': session.id, 'date': session.date}

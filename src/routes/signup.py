@@ -5,7 +5,7 @@ from src.models import RecipientSessionRecipe, db
 blueprint = Blueprint('signup', __name__, url_prefix='/signup')
 
 
-@blueprint.route('', methods=['POST'])
+@blueprint.post('')
 def post_signup():
     """
     A signup is a combination of a recipe, a recipient, a session, and a number of meals.

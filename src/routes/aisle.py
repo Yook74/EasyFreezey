@@ -8,7 +8,7 @@ from src.models import Aisle, db
 blueprint = Blueprint('aisle', __name__, url_prefix='/aisle')
 
 
-@blueprint.route('', methods=['POST'])
+@blueprint.post('')
 def post_aisle():
     """
     Expects JSON describing an aisle. An aisle is a generic area of a store.
@@ -25,7 +25,7 @@ def post_aisle():
     return str(new_aisle.id)
 
 
-@blueprint.route('', methods=['GET'])
+@blueprint.get('')
 def all_aisles():
     return jsonify([
         {'name': aisle.name, 'id': aisle.id}
