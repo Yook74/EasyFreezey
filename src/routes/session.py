@@ -8,7 +8,7 @@ from werkzeug.exceptions import BadRequest
 from src.models import *
 from src.routes.helpers import validate_session_id
 
-blueprint = Blueprint('session', __name__)
+blueprint = Blueprint('session', __name__, url_prefix='/session')
 
 
 @blueprint.get('/<int:session_id>/shopping')
@@ -81,7 +81,7 @@ def session_recipients(session_id):
     return jsonify(out)
 
 
-@blueprint.post('/session')
+@blueprint.post('')
 def post_session():
     """
     Expects JSON data containing just one key: "date".
@@ -101,7 +101,7 @@ def post_session():
         return str(session.id)
 
 
-@blueprint.get('/session')
+@blueprint.get('')
 def all_sessions():
     return jsonify([
         {'id': session.id, 'date': session.date}
