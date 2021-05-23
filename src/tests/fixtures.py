@@ -2,6 +2,7 @@ import os
 import tempfile
 import json
 import time
+from datetime import date, timedelta
 
 from copy import deepcopy
 import pytest
@@ -81,6 +82,13 @@ class TestClientWrapper:
         """Creates the given recipients if they do not already exist"""
         for recipient in recipients:
             self.post('/recipient', json=recipient)
+
+    def ensure_recipients_recipes_sessions(self):
+        self.ensure_recipes()
+        self.ensure_recipients()
+
+        self.post('/session', json={'date': date.today().isoformat()})
+        self.post('/session', json={'date': (date.today() + timedelta(weeks=1)).isoformat()})
 
 
 @pytest.fixture()
