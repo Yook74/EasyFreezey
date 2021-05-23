@@ -20,17 +20,21 @@ def shopping_list(session_id):
     """
     validate_session_id(session_id)
 
-    ingredient_quantities = db.session.query(Ingredient, func.sum(RecipeIngredient.amount))\
+    # Total amount of ingredient needed = Σ number of meals in a particular signup * amount of ingredient in that recipe
+    ingredient_amounts = \
+        db.session.query(Ingredient, func.sum(RecipientSessionRecipe.meal_count * RecipeIngredient.amount))\
         .join(RecipeIngredient).join(Recipe).join(RecipientSessionRecipe)\
-        .filter(RecipientSessionRecipe.session_id == session_id).group_by(Ingredient.id).order_by(Ingredient.aisle_id)
+        .filter(RecipientSessionRecipe.session_id == session_id)\
+        .group_by(Ingredient.id)\
+        .order_by(Ingredient.aisle_id)
 
     return jsonify([
         {
             'name': ingredient.name,
             'unit': ingredient.store_unit,
             'aisle': ingredient.aisle.name,
-            'qty': quantity / ingredient.unit_conversion,
-        } for ingredient, quantity in ingredient_quantities
+            'qty': total_ingredient_amount / ingredient.unit_conversion
+        } for ingredient, total_ingredient_amount in ingredient_amounts
     ])
 
 
