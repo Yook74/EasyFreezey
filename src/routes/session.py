@@ -68,7 +68,7 @@ def session_recipients(session_id):
     validate_session_id(session_id)
 
     out = []
-    for recipient in Recipient.query.all():
+    for recipient in Recipient.query:
         meals = db.session.query(Recipe, RecipientSessionRecipe.meal_count)\
             .join(Recipe)\
             .filter(RecipientSessionRecipe.session_id == session_id)\
@@ -101,6 +101,9 @@ def post_session():
     except IntegrityError as exc:
         raise BadRequest(f'There is already a session at the given date. (error: {exc.args[0]})')
 
+    except (ValueError, TypeError) as exc:
+        raise BadRequest(exc.args[0])
+
     else:
         return str(session.id)
 
@@ -108,6 +111,6 @@ def post_session():
 @blueprint.get('')
 def all_sessions():
     return jsonify([
-        {'id': session.id, 'date': session.date}
+        {'id': session.id, 'date': session.date.isoformat()}
         for session in Session.query
     ])
