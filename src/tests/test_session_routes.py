@@ -122,3 +122,28 @@ def test_session_recipients_multiple_signups(client):
         }
     ]
 
+
+def test_post_session_invalid(client):
+    assert client.post('/session', json={}).status_code == 400
+    assert client.post('/session', json={'date': '-5 isn\'t that bad of a score'}).status_code == 400
+    assert client.post('/session', json={'date': 3}).status_code == 400
+    assert client.post('/session', json={'date': 'May'}).status_code == 400
+    assert client.post('/session', json={'date': '2020'}).status_code == 400
+    assert client.post('/session', json={'date': '2020-13-01'}).status_code == 400
+
+    assert client.get_json('/session') == []
+
+
+def test_post_get_session_valid(client):
+    first_iso_string = date.today().isoformat()
+    second_iso_string = (date.today() + timedelta(weeks=1)).isoformat()
+
+    assert client.post('/session', json={'date': first_iso_string}).status_code == 200
+    assert client.get_json('/session') == [{'id': 1, 'date': first_iso_string}]
+
+    assert client.post('/session', json={'date': first_iso_string}).status_code == 400
+    assert client.post('/session', json={'date': second_iso_string}).status_code == 200
+    assert client.get_json('/session') == [
+        {'id': 1, 'date': first_iso_string},
+        {'id': 2, 'date': second_iso_string}
+    ]
