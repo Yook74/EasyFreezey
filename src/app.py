@@ -1,9 +1,11 @@
 from os import path
 
 from flask import Flask
+from sqlalchemy.exc import IntegrityError
 
 from src.models import db
 from src.routes import blueprints
+from src.handlers import *
 
 
 class AppConfig:
@@ -35,6 +37,9 @@ def create_app():
     with app.app_context():
         for blueprint in blueprints:
             app.register_blueprint(blueprint)
+
+        app.register_error_handler(KeyError, handle_key_error)
+        app.register_error_handler(IntegrityError, handle_integrity_error)
 
     return app
 
