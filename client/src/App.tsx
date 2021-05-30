@@ -1,10 +1,24 @@
 import React from 'react';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+import SessionSignup from './SessionSignup';
+import ViewSessions from './ViewSessions';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <div className="App">
-      Easy Freezey!
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/signup/:sessionId">
+          <SessionSignup />
+        </Route>
+        <Route path="/">
+          <ViewSessions />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
