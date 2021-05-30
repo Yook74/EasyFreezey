@@ -3,7 +3,7 @@ from datetime import date
 from flask import jsonify, request, Blueprint
 from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError
-from werkzeug.exceptions import BadRequest
+from werkzeug.exceptions import BadRequest, NotFound
 
 from server.models import *
 from server.routes.helpers import validate_session_id
@@ -114,3 +114,17 @@ def all_sessions():
         {'id': session.id, 'date': session.date.isoformat()}
         for session in Session.query
     ])
+
+
+@blueprint.get('<int:session_id>')
+def get_session(session_id):
+    session = Session.query.filter_by(id=session_id).first()
+
+    if session is None:
+        raise NotFound('No session was found with that ID')
+    else:
+        recipients = Recipient.query.join(RecipientSessionRecipe).filter(RecipientSessionRecipe.session_id == session_id)
+        return jsonify({
+            'date': session.date.isoformat(),
+            'recipient_names': [recipient.name for recipient in recipients]
+        })

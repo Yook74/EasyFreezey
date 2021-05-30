@@ -1,4 +1,4 @@
-from flask import request, Blueprint
+from flask import request, Blueprint, jsonify
 
 from server.models import db, Recipient
 
@@ -20,3 +20,11 @@ def post_recipient():
     db.session.add(recipient)
     db.session.commit()
     return str(recipient.id)
+
+
+@blueprint.get('')
+def all_recipients():
+    return jsonify([
+        {'name': recipient.name, 'phone': recipient.phone, 'email': recipient.email}
+        for recipient in Recipient.query.all()
+    ])
