@@ -31,6 +31,20 @@ describe('Loading component', () => {
     });
   });
 
+  it('renders an error if there is a problem loading the data', async () => {
+    const loadingFunction = () => {
+      return new Promise<string>((resolve, reject) => {
+        reject('error message');
+      });
+    };
+    const display = <div>data display</div>;
+
+    render(<Loading loadingFunction={loadingFunction}>{display}</Loading>);
+    await waitFor(() => {
+      expect(screen.getByText(/error message/i)).toBeInTheDocument();
+    });
+  });
+
   it('only calls the loading function once', async () => {
     const loadingFunction = jest.fn(() => {
       return new Promise<void>((resolve, reject) => {
@@ -45,17 +59,17 @@ describe('Loading component', () => {
     });
   });
 
-  // it('renders an error if there is a problem loading the data', async () => {
-  //   const loadingFunction = () => {
-  //     return new Promise<void>((resolve, reject) => {
-  //       reject();
-  //     });
-  //   };
-  //   const display = <div>data display</div>;
+  it('only calls the loading function once even after error', async () => {
+    const loadingFunction = jest.fn(() => {
+      return new Promise<void>((resolve, reject) => {
+        reject('error message');
+      });
+    });
+    const display = <div>data display</div>;
 
-  //   render(<Loading loadingFunction={loadingFunction}>{display}</Loading>);
-  //   await waitFor(() => {
-  //     expect(screen.getByText(/error/i)).toBeInTheDocument();
-  //   });
-  // });
+    render(<Loading loadingFunction={loadingFunction}>{display}</Loading>);
+    await waitFor(() => {
+      expect(loadingFunction).toHaveBeenCalledTimes(1);
+    });
+  });
 });
