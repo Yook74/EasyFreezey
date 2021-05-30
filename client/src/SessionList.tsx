@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import { Link as RouterLink } from 'react-router-dom';
 import { Session } from './ApiTypes';
+import './css/SessionList.css';
 
 type Props = {
   sessions: Session[];
@@ -26,7 +27,7 @@ const SessionList: React.FC<Props> = (props: Props) => {
   }
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer className="sessions-table" component={Paper}>
       <Table aria-label="list of sessions">
         <TableHead>
           <TableRow>
