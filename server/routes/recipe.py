@@ -1,7 +1,7 @@
 from flask import request, jsonify, Blueprint
 from werkzeug.exceptions import BadRequest, NotFound
 
-from src.models import Recipe, db, Ingredient, RecipeIngredient
+from server.models import Recipe, db, Ingredient, RecipeIngredient
 
 blueprint = Blueprint('recipe', __name__, url_prefix='/recipe')
 

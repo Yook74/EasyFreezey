@@ -1,6 +1,6 @@
 from flask import request, Blueprint
 
-from src.models import RecipientSessionRecipe, db
+from server.models import RecipientSessionRecipe, db
 
 blueprint = Blueprint('signup', __name__, url_prefix='/signup')
 

@@ -1,6 +1,6 @@
 from werkzeug.exceptions import NotFound
 
-from src.models import Session
+from server.models import Session
 
 
 def validate_session_id(session_id: int):

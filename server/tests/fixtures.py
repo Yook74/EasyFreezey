@@ -8,8 +8,8 @@ from copy import deepcopy
 import pytest
 from werkzeug.test import Client
 
-from src.app import create_app, db
-from src.tests.sample_data import *
+from server.app import create_app, db
+from server.tests.sample_data import *
 
 
 class TestClientWrapper:

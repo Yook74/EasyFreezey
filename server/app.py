@@ -3,9 +3,9 @@ from os import path
 from flask import Flask
 from sqlalchemy.exc import IntegrityError
 
-from src.models import db
-from src.routes import blueprints
-from src.handlers import *
+from server.models import db
+from server.routes import blueprints
+from server.handlers import *
 
 
 class AppConfig:

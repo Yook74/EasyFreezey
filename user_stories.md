@@ -6,7 +6,7 @@
 A person who will participate in making the meals during a session.
 Usually this person will also receive some of the meals made.
 
-## Organizer
+### Organizer
 A person who is facilitating the meal prep 
 by making sure that ingredients have been bought and staged, and that people are set up to succeed during a cooking session. 
 

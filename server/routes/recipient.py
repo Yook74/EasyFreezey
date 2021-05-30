@@ -1,6 +1,6 @@
 from flask import request, Blueprint
 
-from src.models import db, Recipient
+from server.models import db, Recipient
 
 blueprint = Blueprint('recipient', __name__, url_prefix='/recipient')
 

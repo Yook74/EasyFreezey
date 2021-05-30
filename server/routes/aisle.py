@@ -3,7 +3,7 @@ from difflib import SequenceMatcher
 from flask import request, jsonify, Blueprint
 from werkzeug.exceptions import BadRequest
 
-from src.models import Aisle, db
+from server.models import Aisle, db
 
 blueprint = Blueprint('aisle', __name__, url_prefix='/aisle')
 

@@ -1,7 +1,7 @@
 from datetime import date, timedelta
 
-from src.tests.fixtures import *
-from src.tests.sample_data import *
+from server.tests.fixtures import *
+from server.tests.sample_data import *
 
 
 def test_get_session_recipes_empty(client):

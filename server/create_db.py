@@ -2,8 +2,8 @@ from argparse import ArgumentParser
 
 from flask import Flask
 
-from src.app import AppConfig
-from src.models import db
+from server.app import AppConfig
+from server.models import db
 
 """
 Creates the database if it does not already exist and creates all the tables inside if it

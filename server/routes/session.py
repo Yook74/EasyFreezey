@@ -5,8 +5,8 @@ from sqlalchemy import func
 from sqlalchemy.exc import IntegrityError
 from werkzeug.exceptions import BadRequest
 
-from src.models import *
-from src.routes.helpers import validate_session_id
+from server.models import *
+from server.routes.helpers import validate_session_id
 
 blueprint = Blueprint('session', __name__, url_prefix='/session')
 

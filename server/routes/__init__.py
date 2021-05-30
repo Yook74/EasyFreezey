@@ -1,4 +1,4 @@
-from src.routes import aisle, ingredient, recipe, session, signup, recipient
+from server.routes import aisle, ingredient, recipe, session, signup, recipient
 
 __all__ = [aisle, ingredient, recipe, session, signup, recipient]
 
