@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import SessionSignup from './SessionSignup';
 import ViewSessions from './ViewSessions';
 
@@ -20,6 +16,6 @@ const App: React.FC = () => {
       </Switch>
     </Router>
   );
-}
+};
 
 export default App;
