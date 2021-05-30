@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import Typography from '@material-ui/core/Typography';
 import Loading from './common/Loading';
 import SessionList from './SessionList';
-import { Session, parseSessionListResponse } from './ApiTypes';
+import { Session, parseSessionList } from './ApiTypes';
 import { apiUrl } from './AppSettings';
 import generateFetchDataFunction from './common/generateFetchDataFunction';
 
@@ -13,7 +13,7 @@ const ViewSessions: React.FC = () => {
     generateFetchDataFunction(
       `${apiUrl}/session`,
       (json) => {
-        setSessions(parseSessionListResponse(json));
+        setSessions(parseSessionList(json));
       },
       'There was a problem loading the list of sessions'
     ),

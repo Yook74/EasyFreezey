@@ -1,6 +1,7 @@
 export type Session = {
-  id: number;
+  id?: number;
   date: string;
+  recipientNames?: string[];
 };
 
 const parseSession = (json: any): Session => {
@@ -8,10 +9,23 @@ const parseSession = (json: any): Session => {
     throw new TypeError();
   }
 
-  return { id: json.id, date: json.date };
+  const session: Session = { date: json.date };
+  if (Number.isInteger(json.id)) {
+    session.id = json.id;
+  }
+  if (Array.isArray(json.recipient_names)) {
+    session.recipientNames = json.recipient_names.map((name: any) => {
+      if (typeof name !== 'string') {
+        throw new TypeError();
+      }
+      return name;
+    });
+  }
+
+  return session;
 };
 
-export const parseSessionListResponse = (json: any): Session[] => {
+export const parseSessionList = (json: any): Session[] => {
   if (!(json && Array.isArray(json))) {
     throw new TypeError();
   }
