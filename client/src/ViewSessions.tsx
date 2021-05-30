@@ -3,13 +3,14 @@ import Typography from '@material-ui/core/Typography';
 import Loading from './common/Loading';
 import SessionList from './SessionList';
 import { Session, parseSessionListResponse } from './ApiTypes';
+import { apiUrl } from './AppSettings';
 
 const ViewSessions: React.FC = () => {
   const [sessions, setSessions] = useState<Session[]>([]);
 
   const getSessions = useCallback<() => Promise<string | void>>(() => {
     return new Promise((resolve, reject) => {
-      fetch('http://localhost:5000/session')
+      fetch(`${apiUrl}/session`)
         .then((response) => {
           return response.json();
         })
