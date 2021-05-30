@@ -1,8 +1,13 @@
 import React from 'react';
+import Typography from '@material-ui/core/Typography';
 
 const ViewSessions: React.FC = () => {
   return (
-    <div>View Sessions</div>
+    <div>
+      <Typography variant="h4" component="h1">
+        Find a session
+      </Typography>
+    </div>
   );
 };
 
