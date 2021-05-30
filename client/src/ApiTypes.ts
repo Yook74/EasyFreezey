@@ -4,8 +4,8 @@ export type Session = {
   recipientNames?: string[];
 };
 
-const parseSession = (json: any): Session => {
-  if (!(json && Number.isInteger(json.id) && typeof json.date === 'string')) {
+export const parseSession = (json: any): Session => {
+  if (!(json && typeof json.date === 'string')) {
     throw new TypeError();
   }
 
