@@ -2,3 +2,4 @@ venv
 .idea
 easy-freezey.db
 db_password.txt
+**.pytest_cache

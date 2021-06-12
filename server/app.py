@@ -1,8 +1,11 @@
 from os import path
 
 from flask import Flask
+from sqlalchemy.exc import IntegrityError
 
-from src.models import db
+from server.models import db
+from server.routes import blueprints
+from server.handlers import *
 
 
 class AppConfig:
@@ -32,11 +35,14 @@ def create_app():
     db.init_app(app)
 
     with app.app_context():
-        import routes
-        return app
+        for blueprint in blueprints:
+            app.register_blueprint(blueprint)
 
+        app.register_error_handler(KeyError, handle_key_error)
+        app.register_error_handler(IntegrityError, handle_integrity_error)
 
-application = create_app()  # Gunicorn uses this application object
+    return app
+
 
 if __name__ == '__main__':
-    application.run()
+    create_app().run()
