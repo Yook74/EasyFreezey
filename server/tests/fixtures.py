@@ -102,17 +102,9 @@ def client():
     with app.app_context():
         db.create_all()
 
-    yield TestClientWrapper(app.test_client())
+    test_client = TestClientWrapper(app.test_client())
+    yield test_client
+    del test_client
 
-    for retry in range(5):
-        try:
-            os.unlink(db_file_path)
-        except (PermissionError, OSError) as exc:
-            if retry == 4:
-                raise exc
-            else:
-                time.sleep(0.05)
-        else:
-            break
-
+    os.unlink(db_file_path)
     os.close(db_file_handle)
