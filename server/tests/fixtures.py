@@ -104,5 +104,15 @@ def client():
 
     yield TestClientWrapper(app.test_client())
 
-    os.unlink(db_file_path)
+    for retry in range(5):
+        try:
+            os.unlink(db_file_path)
+        except (PermissionError, OSError) as exc:
+            if retry == 4:
+                raise exc
+            else:
+                time.sleep(0.05)
+        else:
+            break
+
     os.close(db_file_handle)
