@@ -102,9 +102,7 @@ def client():
     with app.app_context():
         db.create_all()
 
-    test_client = TestClientWrapper(app.test_client())
-    yield test_client
-    del test_client
+    yield TestClientWrapper(app.test_client())
 
-    os.unlink(db_file_path)
     os.close(db_file_handle)
+    os.unlink(db_file_path)
