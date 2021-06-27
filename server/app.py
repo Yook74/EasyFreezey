@@ -1,7 +1,8 @@
 from os import path
 
 from flask import Flask
-from sqlalchemy.exc import IntegrityError
+from sqlalchemy.exc import IntegrityError, StatementError
+from werkzeug.exceptions import NotFound
 
 from server.models import db
 from server.routes import blueprints
@@ -40,6 +41,9 @@ def create_app():
 
         app.register_error_handler(KeyError, handle_key_error)
         app.register_error_handler(IntegrityError, handle_integrity_error)
+        app.register_error_handler(NotFound, handle_not_found)
+        app.register_error_handler(ValueError, handle_value_error)
+        app.register_error_handler(StatementError, handle_value_error)  # StatementError is a subclass of ValueError
 
     return app
 
