@@ -126,5 +126,5 @@ def get_session(session_id):
         recipients = Recipient.query.join(RecipientSessionRecipe).filter(RecipientSessionRecipe.session_id == session_id)
         return jsonify({
             'date': session.date.isoformat(),
-            'recipient_names': [recipient.name for recipient in recipients]
+            'recipientNames': [recipient.name for recipient in recipients]
         })

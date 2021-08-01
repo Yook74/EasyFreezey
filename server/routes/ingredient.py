@@ -1,7 +1,7 @@
 from flask import request, jsonify, Blueprint
 from werkzeug.exceptions import NotFound
 
-from server.models import Ingredient, db
+from server.models import Ingredient, Aisle, db
 
 blueprint = Blueprint('ingredient', __name__, url_prefix='/ingredient')
 
@@ -17,6 +17,10 @@ def post_ingredient():
     unitConversion: the ratio of storeUnit to recipeUnit. Usually >= 1
     storeUnitPrice: the price of one storeUnit at a store like Costco
     """
+    aisle_id = int(request.json['aisleId'])
+    if not Aisle.query.filter_by(id=aisle_id).count():
+        raise NotFound('No Aisle was found with that ID')
+
     ingredient = Ingredient(
         name=request.json['name'],
         aisle_id=request.json['aisleId'],

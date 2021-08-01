@@ -26,7 +26,10 @@ class TestClientWrapper:
 
     def get_json(self, path: str) -> dict:
         response = self.test_client.get(path)
-        return json.loads(response.data)
+        try:
+            return json.loads(response.data)
+        except json.JSONDecodeError:
+            raise ValueError(f'Invalid JSON: {response.data}')
 
     def ensure_aisles(self, aisles=AISLES):
         """
@@ -71,7 +74,7 @@ class TestClientWrapper:
 
         for recipe in deepcopy(recipes):
             for ingredient in recipe['ingredients']:
-                ingredient['id'] = ingredient_ids[ingredient['name']] # set the ID based on the name
+                ingredient['id'] = ingredient_ids[ingredient['name']]  # set the ID based on the name
 
             if recipe['name'] not in existing_recipe_names:
                 self.post('/recipe', json=recipe)
