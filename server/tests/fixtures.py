@@ -107,5 +107,5 @@ def client():
 
     yield TestClientWrapper(app.test_client())
 
-    os.unlink(db_file_path)
     os.close(db_file_handle)
+    os.unlink(db_file_path)
