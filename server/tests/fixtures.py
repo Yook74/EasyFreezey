@@ -98,10 +98,12 @@ class TestClientWrapper:
 def client():
     db_file_handle, db_file_path = tempfile.mkstemp()
 
-    app = create_app()
+    class TestConfig:
+        SQLALCHEMY_DATABASE_URI = f'sqlite:///{db_file_path}'
+
+    app = create_app(TestConfig())
     app.testing = True
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_file_path}'
     with app.app_context():
         db.create_all()
 

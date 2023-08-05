@@ -30,9 +30,9 @@ class AppConfig:
             return f'postgresql://{self.db_username}:{self.db_password}@{self.db_host}:5432/easy_freezey'
 
 
-def create_app():
+def create_app(config=AppConfig()):
     app = Flask(__name__)
-    app.config.from_object(AppConfig())
+    app.config.from_object(config)
     db.init_app(app)
 
     with app.app_context():
