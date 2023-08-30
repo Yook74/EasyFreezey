@@ -14,6 +14,8 @@ from server.tests.sample_data import *
 
 class TestClientWrapper:
     """Provides all the methods of a werkzeug test client with a few extra convenience methods"""
+    __test__ = False  # I am not a test pytest!
+
     def __init__(self, test_client: Client):
         self.test_client = test_client
 
