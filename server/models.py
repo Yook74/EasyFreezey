@@ -45,7 +45,7 @@ class Recipe(db.Model):
     The source may be a url or simply a description like "Grandma B."
     """
     id = db.Column(db.Integer(), primary_key=True)
-    name = db.Column(db.String(128), nullable=False)
+    name = db.Column(db.String(128), nullable=False, unique=True)
     text = db.Column(db.Text(), nullable=True)
     source = db.Column(db.String(256), nullable=True)
     servings = db.Column(db.Float(), nullable=False)

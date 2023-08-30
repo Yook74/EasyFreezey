@@ -32,11 +32,18 @@ def post_recipe():
     )
     db.session.add(new_recipe)
 
-    if len(request.json['ingredients']) == 0:
-        raise BadRequest('Recipes must have at least one ingredient')
+    try:
+        if len(request.json['ingredients']) == 0:
+            raise BadRequest('Recipes must have at least one ingredient')
 
-    if any(ingredient['amount'] <= 0 for ingredient in request.json['ingredients']):
-        raise BadRequest('Recipe amounts must be greater than 0')
+        if any(ingredient['amount'] <= 0 for ingredient in request.json['ingredients']):
+            raise BadRequest('Recipe amounts must be greater than 0')
+
+        if request.json['servings'] <= 0:
+            raise BadRequest('The recipe must have a positive number of servings')
+
+    except TypeError:
+        raise BadRequest('Invalid type in JSON')
 
     for ingredient in request.json['ingredients']:
         if Ingredient.query.filter_by(id=ingredient['id']).first() is None:

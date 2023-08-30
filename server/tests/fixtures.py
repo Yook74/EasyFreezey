@@ -26,7 +26,10 @@ class TestClientWrapper:
 
     def get_json(self, path: str) -> dict:
         response = self.test_client.get(path)
-        return json.loads(response.data)
+        try:
+            return json.loads(response.data)
+        except json.JSONDecodeError:
+            raise ValueError(f'Invalid JSON: {response.data}')
 
     def ensure_aisles(self, aisles=AISLES):
         """
@@ -71,7 +74,7 @@ class TestClientWrapper:
 
         for recipe in deepcopy(recipes):
             for ingredient in recipe['ingredients']:
-                ingredient['id'] = ingredient_ids[ingredient['name']] # set the ID based on the name
+                ingredient['id'] = ingredient_ids[ingredient['name']]  # set the ID based on the name
 
             if recipe['name'] not in existing_recipe_names:
                 self.post('/recipe', json=recipe)
@@ -95,14 +98,16 @@ class TestClientWrapper:
 def client():
     db_file_handle, db_file_path = tempfile.mkstemp()
 
-    app = create_app()
+    class TestConfig:
+        SQLALCHEMY_DATABASE_URI = f'sqlite:///{db_file_path}'
+
+    app = create_app(TestConfig())
     app.testing = True
 
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{db_file_path}'
     with app.app_context():
         db.create_all()
 
     yield TestClientWrapper(app.test_client())
 
-    os.unlink(db_file_path)
     os.close(db_file_handle)
+    os.unlink(db_file_path)
