@@ -24,8 +24,9 @@ pip install -r requirements.txt
 
 ### Install react environment
 
+`cd client`
 `npm install`
 
 ### Run frontend (after running backend)
 
-`npm run`
+`npm start`
