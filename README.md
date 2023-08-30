@@ -16,7 +16,10 @@ pip install -r requirements.txt
 
 ### Run dev backend
 
-`python -m server.app`
+```bash
+cp samples/easy-freezey.db .
+python -m server.app
+```
 
 ### Run backend tests
 
@@ -24,8 +27,10 @@ pip install -r requirements.txt
 
 ### Install react environment
 
-`cd client`
-`npm install`
+```bash
+cd client
+npm install
+```
 
 ### Run frontend (after running backend)
 

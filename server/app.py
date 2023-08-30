@@ -10,7 +10,7 @@ from server.handlers import *
 
 
 class AppConfig:
-    use_sqlite = False
+    use_sqlite = True
     db_username = 'freezey-flask'
     db_host = 'soup.tplinkdns.com'
 
