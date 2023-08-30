@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import Typography from '@material-ui/core/Typography';
+import Typography from '@mui/material/Typography';
 import Loading from './common/Loading';
 import SessionList from './SessionList';
 import { Session, parseSessionList } from './ApiTypes';

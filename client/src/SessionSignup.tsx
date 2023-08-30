@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useParams, Link as RouterLink } from 'react-router-dom';
-import Link from '@material-ui/core/Link';
-import Typography from '@material-ui/core/Typography';
+import Link from '@mui/material/Link';
+import Typography from '@mui/material/Typography';
 import Loading from './common/Loading';
 import { Session, parseSession } from './ApiTypes';
 import { apiUrl } from './AppSettings';

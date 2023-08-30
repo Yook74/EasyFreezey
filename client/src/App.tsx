@@ -1,13 +1,14 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import { StylesProvider } from '@material-ui/core/styles';
+import { ThemeProvider, createMuiTheme } from '@mui/material/styles';
 import SessionSignup from './SessionSignup';
 import ViewSessions from './ViewSessions';
 
+const theme = createMuiTheme();
+
 const App: React.FC = () => {
-  // injectFirst allows for overriding Material UI styles with regular CSS
   return (
-    <StylesProvider injectFirst>
+    <ThemeProvider theme={theme}>
       <Router>
         <Switch>
           <Route path="/signup/:sessionId">
@@ -18,7 +19,7 @@ const App: React.FC = () => {
           </Route>
         </Switch>
       </Router>
-    </StylesProvider>
+    </ThemeProvider>
   );
 };
 
